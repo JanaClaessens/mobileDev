@@ -1,4 +1,6 @@
 import { View } from 'react-native';
+import WordpressService from '../../services/WordpressService';
+WordpressService.login()
 
 export default function HomeScreen() {
     return (
