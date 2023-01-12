@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import ProductComponent from '../../components/ProductComponent';
 import WordpressService from '../../services/WordpressService';
 
@@ -14,19 +14,21 @@ export default function HomeScreen() {
     
     useEffect(() => {
         // Word in begin wanneer component geladen word aangeroepen
-        console.log("HomeScreen is aangemaakt")
         fetchProducts();
     }, []);
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <b>Home Scherm</b>
-
-            <div>
+        <View style={{ margin: 40 }}>
+            <ScrollView>
                 {products.map(product => {
-                    return <ProductComponent key={product.id} titel={product.title} prijs={product.prijs}></ProductComponent>
+                    return <ProductComponent 
+                                key={product.id}
+                                titel={product.title}
+                                prijs={product.prijs}
+                                image={product.image}
+                            ></ProductComponent>
                 })}
-            </div>
+            </ScrollView>
         </View>
     );
 }
