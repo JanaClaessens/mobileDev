@@ -7,8 +7,6 @@ class WordpressService {
 
     async login(){
         // Krijgt een nieuwe JWT token
-        console.log("logging in")
-
         let login = {
             username: this.username,
             password: this.password
@@ -26,11 +24,25 @@ class WordpressService {
     }
 
     async getAllProducts() {
-        console.log(this.username)
+        let result = await fetch("https://janaclaessens.be/wp-json/jana-api/v1/products", {
+            method: "GET", 
+            headers: {
+                Authorization: "Bearer " + this.token
+            }
+        })
+        let json = await result.json()
+        return json
     }
 
     async getProductById(productId) {
-
+        let result = await fetch("https://janaclaessens.be/wp-json/jana-api/v1/products/" + productId, {
+            method: "GET", 
+            headers: {
+                Authorization: "Bearer " + this.token
+            }
+        })
+        let json = await result.json()
+        return json
     }
 }
 
