@@ -1,26 +1,32 @@
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
+import ProductComponent from '../../components/ProductComponent';
 import WordpressService from '../../services/WordpressService';
 
-async function testService(){
-    await WordpressService.login()
-    let products = await WordpressService.getAllProducts()
-    console.log(products)
-
-    let product = await WordpressService.getProductById(75)
-    console.log(product)
-}
-
-testService()
-
 export default function HomeScreen() {
+    const [products, setProducts] = useState([]);
+
+    async function fetchProducts(){
+        await WordpressService.login()
+        let products = await WordpressService.getAllProducts()
+        setProducts(products)
+    }
+    
+    useEffect(() => {
+        // Word in begin wanneer component geladen word aangeroepen
+        console.log("HomeScreen is aangemaakt")
+        fetchProducts();
+    }, []);
+
     return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <b>Home Scherm</b>
-        <div>
-            <div>Product 1</div>
-            <div>Product 2</div>
-            <div>Product 3</div>
-        </div>
-    </View>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <b>Home Scherm</b>
+
+            <div>
+                {products.map(product => {
+                    return <ProductComponent key={product.id} titel={product.title} prijs={product.prijs}></ProductComponent>
+                })}
+            </div>
+        </View>
     );
 }
