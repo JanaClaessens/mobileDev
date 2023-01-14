@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import ProductComponent from '../../components/ProductComponent';
+import ProductCard from '../../components/ProductCard';
 import WordpressService from '../../services/WordpressService';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
     const [products, setProducts] = useState([]);
 
     async function fetchProducts(){
@@ -21,12 +21,14 @@ export default function HomeScreen() {
         <View style={{ margin: 40 }}>
             <ScrollView>
                 {products.map(product => {
-                    return <ProductComponent 
+                    return <ProductCard 
                                 key={product.id}
-                                titel={product.title}
+                                id={product.id}
+                                navigation={navigation}
+                                title={product.title}
                                 prijs={product.prijs}
                                 image={product.image}
-                            ></ProductComponent>
+                            ></ProductCard>
                 })}
             </ScrollView>
         </View>
