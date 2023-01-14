@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, Card, Snackbar, Text } from 'react-native-paper';
 import CartService from '../../services/CartService';
+import SavedItemsService from '../../services/SavedItemsService';
 
 export default function ProductCard({navigation, id, title, prijs, image}) {
     const [snackbarVisible, setSnackbarVisible] = useState(false)
@@ -19,6 +20,14 @@ export default function ProductCard({navigation, id, title, prijs, image}) {
         }, 1000)
     }
 
+    function addToSavedItems(){
+        SavedItemsService.addProduct(id, title, prijs)
+        setSnackbarVisible(true)
+        setTimeout(_ => {
+            setSnackbarVisible(false)
+        }, 1000)
+    }
+
     return (
         <Card onPress={navigateToProduct} style={{margin: 10}}>
             <Card.Title title={title}/>
@@ -26,11 +35,12 @@ export default function ProductCard({navigation, id, title, prijs, image}) {
             <Card.Actions>
                 <Text variant="labelLarge" style={{marginTop: 80}}>€ { prijs }</Text>
                 <Button onPress={addToCart}>🛒</Button>
+                <Button onPress={addToSavedItems}>⭐</Button>
             </Card.Actions>
             <Snackbar
                 visible={snackbarVisible}
             >
-                    Toegevoegd aan winkelmandje!
+                    Toegevoegd!
             </Snackbar>
         </Card>
     )

@@ -16,7 +16,7 @@ class CartService {
                 gevonden = true
             }
         }
-    //niet gevonden => toevoegen
+        //niet gevonden => toevoegen
         if(!gevonden){
             this.items.push({
                 naam: naam,
